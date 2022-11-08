@@ -1,8 +1,8 @@
 from pycomm3 import LogixDriver
 from pycomm3 import CIPDriver
-import csv
 
-#TODO: communicate with PLC and get the tags
+
+
 
 def discoverPLC():
     discovered_plc = CIPDriver.discover()
@@ -14,10 +14,16 @@ def discoverPLC():
     else:
         return True
 
-def get_tags(plcip):
-    with LogixDriver(plcip) as plc:
-        pass
 
+def get_tags(plcip):
+    plc = LogixDriver(plcip)
+    taglist = plc.get_tag_list()
+    if taglist:
+        with open ('taglist', 'w+') as f:
+            print(taglist, file=f)
+        return True
+    else:
+        return False
 
 def filter_tags():
     pass

@@ -2,7 +2,6 @@ from tkinter import *
 from tkinter import ttk
 from tkinter import filedialog as fd
 import netifaces
-import csv
 
 # tag retrieval plc control scheme
 import tag_retrieval
@@ -14,7 +13,7 @@ import tag_retrieval
 # TODO Project load
 
 
-class selectionMenu():
+class selectionMenu:
     # show the GUI for selecting the PLC
 
     def __init__(self):
@@ -70,7 +69,8 @@ class selectionMenu():
                 self.ip_select.state(["readonly"])
                 self.ok_button.grid(row=3, column=2)
 
-    def findnetif(self):
+    @staticmethod
+    def findnetif():
         # used for getting network adapter IP's
         nics = netifaces.interfaces()
         niclist = []
@@ -107,7 +107,7 @@ class selectionMenu():
         statuscanvas.grid(column=0, row=0)
         connectionindicator = statuscanvas.create_oval(10, 10, 25, 25)
         statuscanvas.itemconfig(connectionindicator, fill="red")
-        if status == True:
+        if status:
             statustext.config(text="Connected")
             statuscanvas.itemconfig(connectionindicator, fill="green")
 
@@ -166,10 +166,6 @@ class mainMenu:
     def load_project(self):
         self.mainFrame.destroy()
         loadMenu()
-
-    def load_tags(self):
-        self.mainFrame.destroy()
-        tag_retrieval.get_tags()
 
     def create_buttons(self):
         button_PLC_select = ttk.Button(self.mainFrame, text="PLC config", command=self.select_PLC)
